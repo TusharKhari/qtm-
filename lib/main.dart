@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/screens/auth_screen.dart';
 import 'package:news_app/screens/feed_screen.dart';
+import 'package:news_app/screens/providers/news_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'firebase_options.dart';
@@ -30,17 +32,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
        builder: (context, orientation, deviceType) {
-        return  MaterialApp(
-        title: 'Flutter Demo',
+        return  ChangeNotifierProvider(create: (context) => NewsProvider(), 
+        child:   MaterialApp(
+        //title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // home: const NewsFeed(),
-        home: AuthScreen()
+        home: const NewsFeed(),
+        // home: const AuthScreen()
                 // home: const AuthScreen(),
 
-      );
+      ),
+        );
+        
+      
       },
     );
   }

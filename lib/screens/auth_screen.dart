@@ -1,6 +1,5 @@
 
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
+ 
  import 'package:flutter/material.dart';
  import 'package:news_app/constants.dart';
 import 'package:news_app/screens/login_screen.dart';
@@ -9,7 +8,7 @@ import 'package:news_app/screens/signup_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
-
+  
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
@@ -19,10 +18,11 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: false,
         title: 
-        Text.rich(TextSpan(
+        const Text.rich(TextSpan(
           text: "Social",
           style: TextStyle(color: Colors.white, ),
           children: [
@@ -39,10 +39,10 @@ class _AuthScreenState extends State<AuthScreen> {
         children: [
           // == login sign up buttons 
           Container(  
-             height: 45,   decoration: BoxDecoration(  color: Colors.white,   border: Border.all(
+             height: 5.5.h,   decoration: BoxDecoration(  color: Colors.white,   border: Border.all(
                 color: GlobalVar.red,
               ), 
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             ),
             child:
              Row(
@@ -51,9 +51,9 @@ class _AuthScreenState extends State<AuthScreen> {
                  decoration: isLoginPage ?  BoxDecoration(  color: GlobalVar.red,  border: Border.all(
                 color: GlobalVar.red,
               ), 
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             ) : 
-            BoxDecoration(  
+            const BoxDecoration(  
               color: Colors.white,  
              borderRadius: 
              BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), ),
@@ -63,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   isLoginPage = true;
                 });
               },
-              child: Center(child: 
+              child: const Center(child: 
               Text(   "LOGIN", style: TextStyle(color: Colors.grey , fontWeight: FontWeight.w800), )),
             ),
              ), 
@@ -72,9 +72,9 @@ class _AuthScreenState extends State<AuthScreen> {
             decoration:  !isLoginPage ?  BoxDecoration(  color: GlobalVar.red,  border: Border.all(
                 color: GlobalVar.red,
               ), 
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             ) : 
-            BoxDecoration(  
+            const BoxDecoration(  
               color: Colors.white,  
              borderRadius: 
            
@@ -86,7 +86,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   isLoginPage = false;
                 });
               },
-               child: Center(child: Text(   "SIGN UP",
+               child: const Center(child: Text(   "SIGN UP",
                 style: TextStyle(color: Colors.grey , fontWeight: FontWeight.w800), )),
              ),
             
@@ -97,7 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
           // =============
 
-          isLoginPage ? LoginScreen() : SignUpScreen(), 
+          isLoginPage ? const LoginScreen() : const SignUpScreen(), 
         ],
       ),
     );

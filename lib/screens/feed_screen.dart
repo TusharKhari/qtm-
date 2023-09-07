@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+ import 'package:http/http.dart' as http;
+import 'package:news_app/screens/providers/news_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:http/http.dart' as http;
 
 class NewsFeed extends StatefulWidget {
   const NewsFeed({super.key});
@@ -14,53 +17,95 @@ class NewsFeed extends StatefulWidget {
 }
 
 class _NewsFeedState extends State<NewsFeed> {
-  var data;
-  Future<void> getNews() async {
-    final res = await http.get(Uri.parse(
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=59afb6110da4447581a5863c2e1ce4ee",
-    ));
-    if (res.statusCode == 200) {
-      data = jsonDecode(res.body.toString());
-    } else {
-      data = [];
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<NewsProvider>(context);
     return Scaffold(
-      body: Column(
+      body: Column( 
+         children: [
+            _appBar()
+
         
+        //===========
+      ]),
+    );
+  }
+}
+
+
+ 
+  Widget _appBar() {
+    return Padding(
+      padding:   EdgeInsets.only(top: 2.h),
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-        Container(
-          padding: const EdgeInsets.only(top: 40),
-          height: 100,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-          ),
-          child: const Row(
-            children: [
-              Text("      "),
-              Icon(
-                Icons.search,
-                color: Colors.blue,
-                size: 50,
-                shadows: <Shadow>[Shadow(color: Colors.grey, blurRadius: 10.0)],
+          Container(
+             height: 82,
+              decoration: BoxDecoration(
+      border: Border.all(color: Colors.grey),
+      boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5), // Shadow color
+                spreadRadius: 5, // Spread radius
+                blurRadius: 10, // Blur radius
+                offset: Offset(0, 3), // Offset to control the direction of the shadow
               ),
-              Text("  Search in a feed ")
             ],
+              ),
           ),
+          Container(
+            //  margin:   EdgeInsets.only(top: 50.h),
+              height: 80,
+              decoration: BoxDecoration(
+      border: Border.all(color: Colors.grey),
+      color: Colors.white
+              ),
+              child:   Row(
+      children: [
+        Text("      "),
+        Icon(
+          Icons.search,
+          color: Colors.blue,
+          size: 50,
+          shadows: <Shadow>[Shadow(color: Colors.grey, blurRadius: 10.0)],
         ),
-        Expanded(
-          child: FutureBuilder(
-              future: getNews(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return ListView.builder(
+        // 
+        SizedBox(
+          width: 80.w,
+          child: TextField( 
+            cursorHeight: 0, 
+            cursorWidth: 0,
+           decoration: InputDecoration(
+            hintText: "Search in feed ",
+            hintStyle: TextStyle(
+              color: Colors.blue, 
+              fontSize: 28, 
+              fontWeight: FontWeight.w600
+            ),
+            border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent, width: 2)),
+                  focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent, width: 2)),
+                  enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent, width: 2)),
+           ),  
+    
+            onSubmitted: (value)  { 
+            },
+          )),
+      ],
+              ),
+            ), 
+            ],),
+    );
+  }
+
+
+/**
+ 
+  ListView.builder(
                   padding: EdgeInsets.all(10),
-                    itemCount: data.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int idx) {
                       return Padding(
                         padding: EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
@@ -69,13 +114,6 @@ class _NewsFeedState extends State<NewsFeed> {
                           child: Card(
                             elevation: 2.0,
                             color: Colors.white,
-                            //padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                            // height: 130,
-                            // decoration: BoxDecoration(
-                            //   //color: Colors.green,
-                            //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                            //   border: Border.all(color: Colors.grey),
-                            // ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -89,19 +127,17 @@ class _NewsFeedState extends State<NewsFeed> {
                                           height: 10,
                                         ),),
                                     Text(
-                                      data["articles"][idx]["publishedAt"],
+                                   snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
                                       style: TextStyle(
                                         fontSize: 10.0,
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    SizedBox(height: 5.0),
-                                    
+                                    SizedBox(height: 5.0),                               
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width * 0.5,
-                                      
-                                      child: Text(
-                                        data["articles"][idx]["title"], maxLines: 2
+                                                                     child: Text(
+                                        data["articles"][idx]["title"] ?? "NA", maxLines: 2
                                           , style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold,
@@ -111,9 +147,9 @@ class _NewsFeedState extends State<NewsFeed> {
                                     SizedBox(height: 4.0,),
                                     SizedBox(
                                       width:
-                                          MediaQuery.of(context).size.width * 0.5,
+                                       MediaQuery.of(context).size.width * 0.5,
                                       child: Text(
-                                        data["articles"][idx]["description"],
+                                        data["articles"][idx]["description"] ?? "NA" ,
                                         maxLines: 3,
                                         style: TextStyle(
                                           fontSize: 12.0,
@@ -124,7 +160,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                   ],
                                 ),
                                 Image.network(
-                                  data["articles"][idx]["urlToImage"],
+                                  data["articles"][idx]["urlToImage"] ?? "https://perfectstart.com.au/wp-content/uploads/2017/08/not-available.jpg",
                                   width: 110,
                                 ),
                               ],
@@ -133,9 +169,5 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                       );
                     });
-              }),
-        )
-      ]),
-    );
-  }
-}
+
+ */
