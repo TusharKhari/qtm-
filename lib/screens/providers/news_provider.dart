@@ -82,7 +82,7 @@ class NewsProvider extends ChangeNotifier {
     isSigningIn = false;   
      final isSignOut = await googleSignIn.signOut();
      if(isSignOut == null  ) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthScreen(),));
      }
     // print(user); 
   }

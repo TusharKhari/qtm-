@@ -1,27 +1,27 @@
- import 'package:google_sign_in/google_sign_in.dart';
+//  import 'package:google_sign_in/google_sign_in.dart';
 
-class GoogleSignin{
-   final googleSignIn = GoogleSignIn(
-    clientId: "49016362281-em5g5sbrmdng1bn1jaakrtomcupcg1gt.apps.googleusercontent.com"
-  );
-  bool? _isSigningIn =false;
+// class GoogleSignin{
+//    final googleSignIn = GoogleSignIn(
+//     clientId: "49016362281-em5g5sbrmdng1bn1jaakrtomcupcg1gt.apps.googleusercontent.com"
+//   );
+//   bool? _isSigningIn =false;
 
-  set isSigningIn(bool isSigningIn) {
-    _isSigningIn = isSigningIn;
-    // notifyListeners();
-  }
+//   set isSigningIn(bool isSigningIn) {
+//     _isSigningIn = isSigningIn;
+//     // notifyListeners();
+//   }
 
-  Future login() async {
-    isSigningIn = true;
-    _isSigningIn = true;
-    final user = await googleSignIn.signIn();
-    print(user); 
-  }
+//   Future login() async {
+//     isSigningIn = true;
+//     _isSigningIn = true;
+//     final user = await googleSignIn.signIn();
+//     print(user); 
+//   }
 
-   Future logOut() async {
-    isSigningIn = false;
-    _isSigningIn = false;
-    final user = await googleSignIn.signOut();
-    print(user); 
-  }
-}
+//    Future logOut() async {
+//     isSigningIn = false;
+//     _isSigningIn = false;
+//     final user = await googleSignIn.signOut();
+//     print(user); 
+//   }
+// }

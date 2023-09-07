@@ -31,7 +31,8 @@ class _NewsFeedState extends State<NewsFeed> {
                 child: const CircularProgressIndicator(
                   color: Colors.blue,
                 ))
-            : Consumer<NewsProvider>(
+            : 
+            Consumer<NewsProvider>(
                 builder: (context, newsProvider, child) {
                   if (newsProvider.isLoading) {
                     return const Center(child: CircularProgressIndicator());
@@ -40,22 +41,37 @@ class _NewsFeedState extends State<NewsFeed> {
                   } else {
                     // Use the data from the provider here
                     final newsModel = newsProvider.newsModel;
-                    // Render your UI based on the data
-                    return Expanded(
+                    // Render  UI based on the data
+                    return
+                     Expanded(
                       child: ListView.builder(
                           padding: const EdgeInsets.all(10),
                           itemCount: newsModel.articles!.length,
                           itemBuilder: (BuildContext context, int idx) {
                             String d =  newsModel.articles![idx].publishedAt ?? ""; 
                         final DateTime time1 =  DateTime.parse(d); 
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  12.0, 0.0, 12.0, 12.0),
-                              child: SizedBox(
-                                height: 150,
-                                child: Card(
-                                  elevation: 2.0,
-                                  color: Colors.white,
+                            return 
+                            // ==========
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                elevation: 7,
+                                child: Container(
+                             
+                                  decoration: BoxDecoration(
+                                    boxShadow: [ 
+                                        BoxShadow(color: Colors.grey.withOpacity(0.2),blurRadius: 0 , spreadRadius: 0), 
+                                      BoxShadow(color: Colors.grey.withOpacity(0.2),blurRadius: 0 , spreadRadius: 0), 
+                                      BoxShadow(color: Colors.grey.withOpacity(0.2),blurRadius: 0 , spreadRadius: 0), 
+                                      BoxShadow(color: Colors.grey.withOpacity(0.2),blurRadius: 1 , spreadRadius: 1), 
+                                
+                                        ], 
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey, 
+                                    ), 
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))
+                                  ),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -75,24 +91,17 @@ class _NewsFeedState extends State<NewsFeed> {
                                           Text(
                                             //  snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
                                             // date
-                                           timeago.format(time1) +
-                                                "  " +
-                                                newsModel.articles![idx].source!
-                                                    .name!,
+                                           "${timeago.format(time1)}  ${newsModel.articles![idx].source!.name!}" ?? "NA",
+                                
                                             style: const TextStyle(
                                               fontSize: 10.0,
                                               color: Colors.grey,
                                             ),
                                           ),
                                           const SizedBox(height: 5.0),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.5,
-                                            child: Text(
-                                              // data["articles"][idx]["title"] ??
-                                              //     "NA",
+                                          SizedBox( 
+                                         width: 50.w,
+                                            child: Text( 
                                               newsModel.articles![idx].title
                                                   .toString(),
                                               maxLines: 2,
@@ -107,26 +116,27 @@ class _NewsFeedState extends State<NewsFeed> {
                                             height: 4.0,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.5,
-                                            child: Text(
-                                              // data["articles"][idx]
-                                              //         ["description"] ??
-                                              //     "NA",
-                                              newsModel
-                                                  .articles![idx].description
-                                                  .toString(),
-                                              maxLines: 3,
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.blue,
+                                            width:50.w,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(bottom: 15),
+                                              child: Text(
+                                                // data["articles"][idx]
+                                                //         ["description"] ??
+                                                //     "NA",
+                                                newsModel
+                                                    .articles![idx].description
+                                                    .toString(),
+                                               // maxLines: 3,
+                                                style: const TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.blue,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
+                                
                                       Image.network(
                                         // data["articles"][idx]["urlToImage"] ??
                                         //     "https://perfectstart.com.au/wp-content/uploads/2017/08/not-available.jpg",
@@ -135,17 +145,21 @@ class _NewsFeedState extends State<NewsFeed> {
                                             "https://perfectstart.com.au/wp-content/uploads/2017/08/not-available.jpg",
                                         width: 110,
                                       ),
+                                  
                                     ],
                                   ),
                                 ),
                               ),
                             );
+                         
+                         ////// 
+                         ///
+                      
                           }),
                     );
                   }
                 },
               ),
-
         //===========
       ]),
     );

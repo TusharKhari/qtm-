@@ -36,9 +36,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const NewsFeed(),
-        // home: const AuthScreen()
-                // home: const AuthScreen(),
-
+        // home: const AuthScreen(), 
       ),
         );
       },

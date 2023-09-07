@@ -19,7 +19,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  GoogleSignin googleSignIn = GoogleSignin();
   @override
   Widget build(BuildContext context) {
     return
