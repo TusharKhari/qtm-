@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:news_app/models/news_model.dart';
+import 'package:news_app/screens/auth_screen.dart';
 
 class NewsProvider extends ChangeNotifier {
   static const apiEndPoint =
@@ -66,19 +67,23 @@ class NewsProvider extends ChangeNotifier {
   }
 
   bool isSigningIn =false;
-   signIn(){
-    final googleSignIn = GoogleSignIn(
+  final googleSignIn = GoogleSignIn(
     clientId: "49016362281-em5g5sbrmdng1bn1jaakrtomcupcg1gt.apps.googleusercontent.com"
   );
-  //   isSigningIn(bool isSigningIn) {
-  //   _isSigningIn = isSigningIn;
-  //   notifyListeners();
-  // }
-  Future login() async {
+  Future googleLogin() async {
+    
     final user = await googleSignIn.signIn();
-    if(user != null) isSigningIn = true; 
-     print(user); 
-     notifyListeners();
+    if(user != null) isSigningIn = true;
+    notifyListeners();
+    if(user != null) isSigningIn = true;
+   // print(user); 
   }
-   }
+   Future logOut(BuildContext context) async {
+    isSigningIn = false;   
+     final isSignOut = await googleSignIn.signOut();
+     if(isSignOut == null  ) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+     }
+    // print(user); 
+  }
 }

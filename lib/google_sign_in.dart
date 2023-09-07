@@ -17,4 +17,11 @@ class GoogleSignin{
     final user = await googleSignIn.signIn();
     print(user); 
   }
+
+   Future logOut() async {
+    isSigningIn = false;
+    _isSigningIn = false;
+    final user = await googleSignIn.signOut();
+    print(user); 
+  }
 }

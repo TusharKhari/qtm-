@@ -1,12 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:news_app/models/news_model.dart';
-import 'package:news_app/screens/providers/news_provider.dart';
+  import 'package:news_app/screens/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,11 +26,15 @@ class _NewsFeedState extends State<NewsFeed> {
       body: Column(children: [
         _appBar(context),
         provider.isLoading
-            ? Center(child: CircularProgressIndicator())
+            ?  Padding(
+              padding:  EdgeInsets.only(top: 20.h),
+              child: const CircularProgressIndicator(
+              color: Colors.blue,
+            ))
             : Consumer<NewsProvider>(
                 builder: (context, newsProvider, child) {
                   if (newsProvider.isLoading) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (newsProvider.error.isNotEmpty) {
                     return Text('Error: ${newsProvider.error}');
                   } else {
@@ -45,12 +43,12 @@ class _NewsFeedState extends State<NewsFeed> {
                     // Render your UI based on the data
                     return Expanded(
                       child: ListView.builder(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           itemCount: newsModel.articles!.length,
                           itemBuilder: (BuildContext context, int idx) {
                             return Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
+                                  const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
                               child: SizedBox(
                                 height: 150,
                                 child: Card(
@@ -66,7 +64,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Align(
+                                          const Align(
                                             alignment: Alignment.center,
                                             child: SizedBox(
                                               height: 10,
@@ -76,12 +74,12 @@ class _NewsFeedState extends State<NewsFeed> {
                                             //  snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
                                             newsModel.articles![idx].publishedAt
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 10.0,
                                               color: Colors.grey,
                                             ),
                                           ),
-                                          SizedBox(height: 5.0),
+                                          const SizedBox(height: 5.0),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -93,14 +91,14 @@ class _NewsFeedState extends State<NewsFeed> {
                                               newsModel.articles![idx].title
                                                   .toString(),
                                               maxLines: 2,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.blue,
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 4.0,
                                           ),
                                           SizedBox(
@@ -116,7 +114,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                                   .articles![idx].description
                                                   .toString(),
                                               maxLines: 3,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.blue,
                                               ),
@@ -135,14 +133,10 @@ class _NewsFeedState extends State<NewsFeed> {
                                     ],
                                   ),
                                 ),
-                              ),
-
-                              //
-                              //  Text("data")
+                              ), 
                             );
                           }),
                     );
-                    ;
                   }
                 },
               ),
@@ -170,7 +164,7 @@ Widget _appBar(BuildContext context) {
                 color: Colors.black.withOpacity(0.5), // Shadow color
                 spreadRadius: 5, // Spread radius
                 blurRadius: 10, // Blur radius
-                offset: Offset(
+                offset: const Offset(
                     0, 3), // Offset to control the direction of the shadow
               ),
             ],
@@ -183,8 +177,8 @@ Widget _appBar(BuildContext context) {
               border: Border.all(color: Colors.grey), color: Colors.white),
           child: Row(
             children: [
-              Text("      "),
-              Icon(
+              const Text("      "),
+              const Icon(
                 Icons.search,
                 color: Colors.blue,
                 size: 50,
@@ -192,23 +186,23 @@ Widget _appBar(BuildContext context) {
               ),
               //
               SizedBox(
-                  width: 80.w,
+                  width: 62.w,
                   child: TextField(
-                    cursorHeight: 0,
-                    cursorWidth: 0,
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.blue),
+                    cursorColor: Colors.blue,
+                    decoration: const InputDecoration(
                       hintText: "Search in feed ",
                       hintStyle: TextStyle(
                           color: Colors.blue,
                           fontSize: 28,
                           fontWeight: FontWeight.w600),
-                      border: const UnderlineInputBorder(
+                      border: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.transparent, width: 2)),
-                      focusedBorder: const UnderlineInputBorder(
+                      focusedBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.transparent, width: 2)),
-                      enabledBorder: const UnderlineInputBorder(
+                      enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.transparent, width: 2)),
                     ),
@@ -216,6 +210,10 @@ Widget _appBar(BuildContext context) {
                     provider.getDataFromSearch(value);
                     },
                   )),
+                  IconButton(onPressed: () async{
+                   await provider.logOut(context);
+                  },
+                   icon: const Icon(Icons.logout_sharp, color: Colors.blue,size: 50,))
             ],
           ),
         ),
@@ -224,73 +222,3 @@ Widget _appBar(BuildContext context) {
   );
 }
 
-/**
- 
-  ListView.builder(
-                  padding: EdgeInsets.all(10),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int idx) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
-                        child: SizedBox(
-                          height: 150,
-                          child: Card(
-                            elevation: 2.0,
-                            color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: SizedBox(
-                                          height: 10,
-                                        ),),
-                                    Text(
-                                   snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
-                                      style: TextStyle(
-                                        fontSize: 10.0,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),                               
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.5,
-                                                                     child: Text(
-                                        data["articles"][idx]["title"] ?? "NA", maxLines: 2
-                                          , style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blue,
-                                          ),),
-                                    ),
-                                    SizedBox(height: 4.0,),
-                                    SizedBox(
-                                      width:
-                                       MediaQuery.of(context).size.width * 0.5,
-                                      child: Text(
-                                        data["articles"][idx]["description"] ?? "NA" ,
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Image.network(
-                                  data["articles"][idx]["urlToImage"] ?? "https://perfectstart.com.au/wp-content/uploads/2017/08/not-available.jpg",
-                                  width: 110,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-
- */

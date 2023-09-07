@@ -26,7 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
     
     /// ===========
      Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children:
       [
         _loginDetails(), 
@@ -84,21 +85,21 @@ class _LoginScreenState extends State<LoginScreen> {
               // ======
               Consumer<NewsProvider>(builder: (context, provider , child){
                 return
-                Padding(
+                 Padding(
                 padding:  EdgeInsets.symmetric( vertical: 2.h),
                 child: 
                 InkWell(
-                  onTap: () {
-                  // googleSignIn.googleSignIn();
-                    provider.signIn();
-                    if(provider.isSigningIn == true ){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewsFeed()));
-                    }
+                  onTap: () async{
+                      // googleSignIn.login();
+                    await  provider.googleLogin();
+                      print(provider.isSigningIn);
+                      if(provider.isSigningIn){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewsFeed()));
+                      }
                   },
                   child: Image.asset("assets/btn_google_light_normal_ios.png")),
               );
               }), 
-              /// ======
               Text.rich(
                 TextSpan(
                   text: "Don't have a account? " , style: const TextStyle(
@@ -115,9 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 
               ), 
               /// =========================== 
+              
               SizedBox(
                 height: 25.6.h,
-              )
+              ), 
                     ],
             ),
           ),

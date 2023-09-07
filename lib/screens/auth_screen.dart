@@ -97,7 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
           // =============
 
-          isLoginPage ? const LoginScreen() : const SignUpScreen(), 
+          SizedBox(child: isLoginPage ? const LoginScreen() : const SignUpScreen()), 
         ],
       ),
     );
