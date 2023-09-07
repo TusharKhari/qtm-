@@ -46,13 +46,8 @@ class _NewsFeedState extends State<NewsFeed> {
                           padding: const EdgeInsets.all(10),
                           itemCount: newsModel.articles!.length,
                           itemBuilder: (BuildContext context, int idx) {
-                            String d =  newsModel.articles![idx].publishedAt ?? "";
-                            final DateTime time1 =
-                                DateTime.parse("1987-07-20 20:18:04Z");
-                            final DateTime time2 = DateTime.utc(1989, 11, 9);
-                            print(timeago.format(time1));
-                            print(timeago.format(time2, locale: 'en_short'));
-
+                            String d =  newsModel.articles![idx].publishedAt ?? ""; 
+                        final DateTime time1 =  DateTime.parse(d); 
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   12.0, 0.0, 12.0, 12.0),
@@ -80,8 +75,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                           Text(
                                             //  snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
                                             // date
-                                            newsModel.articles![idx]
-                                                    .publishedAt! +
+                                           timeago.format(time1) +
                                                 "  " +
                                                 newsModel.articles![idx].source!
                                                     .name!,
