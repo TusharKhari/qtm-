@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
-  import 'package:news_app/screens/providers/news_provider.dart';
+import 'package:news_app/screens/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsFeed extends StatefulWidget {
   const NewsFeed({super.key});
@@ -26,11 +26,11 @@ class _NewsFeedState extends State<NewsFeed> {
       body: Column(children: [
         _appBar(context),
         provider.isLoading
-            ?  Padding(
-              padding:  EdgeInsets.only(top: 20.h),
-              child: const CircularProgressIndicator(
-              color: Colors.blue,
-            ))
+            ? Padding(
+                padding: EdgeInsets.only(top: 20.h),
+                child: const CircularProgressIndicator(
+                  color: Colors.blue,
+                ))
             : Consumer<NewsProvider>(
                 builder: (context, newsProvider, child) {
                   if (newsProvider.isLoading) {
@@ -46,9 +46,16 @@ class _NewsFeedState extends State<NewsFeed> {
                           padding: const EdgeInsets.all(10),
                           itemCount: newsModel.articles!.length,
                           itemBuilder: (BuildContext context, int idx) {
+                            String d =  newsModel.articles![idx].publishedAt ?? "";
+                            final DateTime time1 =
+                                DateTime.parse("1987-07-20 20:18:04Z");
+                            final DateTime time2 = DateTime.utc(1989, 11, 9);
+                            print(timeago.format(time1));
+                            print(timeago.format(time2, locale: 'en_short'));
+
                             return Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
+                              padding: const EdgeInsets.fromLTRB(
+                                  12.0, 0.0, 12.0, 12.0),
                               child: SizedBox(
                                 height: 150,
                                 child: Card(
@@ -72,8 +79,12 @@ class _NewsFeedState extends State<NewsFeed> {
                                           ),
                                           Text(
                                             //  snapshot.data["articles"][idx]["publishedAt"] ?? "NA",
-                                            newsModel.articles![idx].publishedAt
-                                                .toString(),
+                                            // date
+                                            newsModel.articles![idx]
+                                                    .publishedAt! +
+                                                "  " +
+                                                newsModel.articles![idx].source!
+                                                    .name!,
                                             style: const TextStyle(
                                               fontSize: 10.0,
                                               color: Colors.grey,
@@ -133,7 +144,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                     ],
                                   ),
                                 ),
-                              ), 
+                              ),
                             );
                           }),
                     );
@@ -148,7 +159,7 @@ class _NewsFeedState extends State<NewsFeed> {
 }
 
 Widget _appBar(BuildContext context) {
-         final provider = Provider.of<NewsProvider>(context);
+  final provider = Provider.of<NewsProvider>(context);
 
   return Padding(
     padding: EdgeInsets.only(top: 2.h),
@@ -207,13 +218,18 @@ Widget _appBar(BuildContext context) {
                               BorderSide(color: Colors.transparent, width: 2)),
                     ),
                     onSubmitted: (value) {
-                    provider.getDataFromSearch(value);
+                      provider.getDataFromSearch(value);
                     },
                   )),
-                  IconButton(onPressed: () async{
-                   await provider.logOut(context);
+              IconButton(
+                  onPressed: () async {
+                    await provider.logOut(context);
                   },
-                   icon: const Icon(Icons.logout_sharp, color: Colors.blue,size: 50,))
+                  icon: const Icon(
+                    Icons.logout_sharp,
+                    color: Colors.blue,
+                    size: 50,
+                  ))
             ],
           ),
         ),
@@ -221,4 +237,3 @@ Widget _appBar(BuildContext context) {
     ),
   );
 }
-
