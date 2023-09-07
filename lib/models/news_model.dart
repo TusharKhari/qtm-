@@ -1,5 +1,3 @@
-
-
 class NewsModel {
   String? status;
   int? totalResults;
@@ -56,7 +54,8 @@ class Articles {
     title = json['title'];
     description = json['description'];
     url = json['url'];
-    urlToImage = json['urlToImage'];
+    urlToImage = json['urlToImage'] ??
+        "https://perfectstart.com.au/wp-content/uploads/2017/08/not-available.jpg";
     publishedAt = json['publishedAt'];
     content = json['content'];
   }

@@ -9,11 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
 
 //  59afb6110da4447581a5863c2e1ce4ee
-
-
   //  https://newsapi.org/v2/top-headlines?country=us&apiKey=59afb6110da4447581a5863c2e1ce4ee
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,14 +35,12 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const NewsFeed(),
-        // home: const AuthScreen()
+        // home: const NewsFeed(),
+        home: const AuthScreen()
                 // home: const AuthScreen(),
 
       ),
         );
-        
-      
       },
     );
   }

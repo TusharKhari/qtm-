@@ -1,6 +1,9 @@
 
  
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/feed_screen.dart';
+import 'package:news_app/screens/providers/news_provider.dart';
+import 'package:provider/provider.dart';
  // import 'package:google_sign_in/google_sign_in.dart';
 
  import 'package:sizer/sizer.dart';
@@ -77,15 +80,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding:   EdgeInsets.only(top: 15),
                 child: Text("Login With", style: TextStyle(fontWeight: FontWeight.w600),),
               ), 
-              Padding(
+              
+              // ======
+              Consumer<NewsProvider>(builder: (context, provider , child){
+                return
+                Padding(
                 padding:  EdgeInsets.symmetric( vertical: 2.h),
                 child: 
                 InkWell(
                   onTap: () {
-                      googleSignIn.login();
+                  // googleSignIn.googleSignIn();
+                    provider.signIn();
+                    if(provider.isSigningIn == true ){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewsFeed()));
+                    }
                   },
                   child: Image.asset("assets/btn_google_light_normal_ios.png")),
-              )  ,
+              );
+              }), 
+              /// ======
               Text.rich(
                 TextSpan(
                   text: "Don't have a account? " , style: const TextStyle(
@@ -115,7 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Padding _loginButton() {
     return Padding(
       padding:   const EdgeInsets.only(top: 10),
-      child: Container(
+      child:
+       Container(
                     height: 60 , 
                        decoration: BoxDecoration(
                      color: GlobalVar.red,
